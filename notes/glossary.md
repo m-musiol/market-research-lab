@@ -69,6 +69,15 @@ finds the best straight-line relationship between an input and output.
 accuracy between two models is *statistically significant* or just
 random.
 
+**Effect size** — A measure of the *magnitude* of an observed relationship,
+independent of sample size; distinct from statistical significance, which
+measures only whether the effect is distinguishable from zero.
+
+**Significance vs. effect size** — A relationship can be statistically
+significant (p < 0.05) but have a tiny effect size; with large samples,
+even microscopic effects become "significant" while remaining practically
+meaningless.
+
 ---
 
 ## Methodology Concepts
@@ -107,6 +116,15 @@ on early sources and adding more layers as the methodology matures.
 **Verdict** — The structured final summary of a source evaluation,
 formatted like a mini research memo, which is the actual research
 output of each evaluation.
+
+**Regime mismatch** — When the data distribution in the training period
+differs structurally from the test period (e.g. training on a normal
+yield curve, testing on an inverted one), causing models to extrapolate
+into unfamiliar territory and often fail catastrophically.
+
+**Honest negative** — A clean evaluation result showing that a candidate
+source has no predictive value, which is as scientifically valuable as
+a positive result and a sign of a well-functioning evaluation framework.
 
 ---
 
