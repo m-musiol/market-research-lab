@@ -99,3 +99,7 @@ market-research-lab/
 - Proceed in small, verifiable steps; confirm each works before moving on.
 - Prefer problem framing ("how should we handle X?") over imperatives.
 - Keep explanations grounded; this project is also a learning vehicle.
+- After every working session, prompt Marc to update two files:
+  1. `notes/glossary.md` in this repo (English, public — for new project terms)
+  2. `Formelsammlung_Finanzen_Statistik.md` in the private notes repo
+     (German, personal — for new formulas and concepts with worked examples)
