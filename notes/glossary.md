@@ -76,7 +76,9 @@ measures only whether the effect is distinguishable from zero.
 **Significance vs. effect size** — A relationship can be statistically
 significant (p < 0.05) but have a tiny effect size; with large samples,
 even microscopic effects become "significant" while remaining practically
-meaningless.
+meaningless. Source 02 (yield curve) exposed this distinction in our lab:
+r = -0.04 was significant at p < 0.01 with n = 4,081, yet had no
+practical predictive value.
 
 ---
 
@@ -120,11 +122,13 @@ output of each evaluation.
 **Regime mismatch** — When the data distribution in the training period
 differs structurally from the test period (e.g. training on a normal
 yield curve, testing on an inverted one), causing models to extrapolate
-into unfamiliar territory and often fail catastrophically.
+into unfamiliar territory and often fail catastrophically. Observed in
+Source 02 evaluation.
 
 **Honest negative** — A clean evaluation result showing that a candidate
-source has no predictive value, which is as scientifically valuable as
-a positive result and a sign of a well-functioning evaluation framework.
+source has no predictive value. As scientifically valuable as a positive
+result and a sign of a well-functioning evaluation framework. The
+yield curve evaluation (Source 02) is our first honest negative.
 
 ---
 
