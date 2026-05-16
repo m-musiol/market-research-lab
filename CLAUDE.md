@@ -86,11 +86,23 @@ market-research-lab/
 
 ## Current Status
 
-- **Infrastructure:** complete (tooling, DB schema, API access verified)
+**Last updated:** 2026-05-14
+
+- **Infrastructure:** complete (tooling, DB schema with `market_data`,
+  `volatility_metrics`, and `source_signals` tables, API access verified)
 - **Target variable:** SPY Garman-Klass volatility, computed and stored
 - **Sources evaluated:**
-  - Source 01 — VIX: PASSES Layers 1-2 (calibration test successful)
-- **Next:** Source 02 (candidate: Treasury yield curve, or Polymarket)
+  - Source 01 — VIX: **PASSES Layers 1-2** (calibration test successful;
+    Pearson r = 0.72, OOS R² beats naive by +0.15)
+  - Source 02 — Treasury yield curve (10Y-2Y spread): **FAILS Layer 2
+    decisively** (in-sample Pearson r = -0.04; OOS R² is -0.42 below
+    naive baseline; DM p = 0.004)
+- **Open methodology issue:** Source 02 exposed a gap in protocol v0.1
+  — Layer 1 checks for statistical significance but not for effect
+  size. With n > 4,000, near-zero correlations trivially cross p < 0.05.
+  Protocol amendment to v0.2 (add effect-size threshold) is the next
+  task.
+- **Next:** Protocol v0.2 amendment, then Source 03 candidate selection.
 
 ---
 
