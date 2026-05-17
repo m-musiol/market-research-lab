@@ -5,8 +5,8 @@ alternative data sources as predictors of financial market behavior.
 Every source documented in this lab is evaluated against this protocol.
 The protocol is designed to evolve, but changes are versioned and noted.
 
-**Version:** 0.1 (Initial)
-**Last updated:** 2026-05-08
+**Version:** 0.2
+**Last updated:** 2026-05-17
 
 ---
 
@@ -89,15 +89,61 @@ evaluation; the source receives a verdict at that level.
 ### Layer 1: Statistical Association
 
 **Question:** Is there any measurable relationship between the source
-signal and future volatility?
+signal and future volatility — both statistically detectable and
+large enough to matter?
 
-**Tests applied:**
+**Tests applied (gating):**
 - Pearson correlation between source signal and t+1 volatility
 - Spearman rank correlation (robust to non-linear monotonic relationships)
-- Granger causality test at lags 1, 5, 10 days
-- Threshold: p-value < 0.05 with sample size ≥ 250 observations
 
-**Failure verdict:** "No statistically detectable association."
+**Tests applied (supporting, non-gating):**
+- Granger causality test at lags 1, 5, 10 days — reported for context
+  and interpretation; see §5.1.1 for why these are not pass/fail.
+
+**Pass thresholds:**
+- Sample size ≥ 250 observations
+- max(|r|, |ρ|) ≥ 0.10 (Cohen's small-effect convention)
+- Corresponding p-value < 0.05 for whichever of r or ρ clears the
+  effect-size threshold
+
+Both r and ρ must be reported regardless of which clears the threshold.
+A large gap between them (e.g. r = 0.04 but ρ = 0.18, or vice versa)
+should be flagged and discussed in the verdict, as it indicates a
+non-linear or outlier-driven relationship that will need careful
+treatment at Layer 2.
+
+**Failure verdict:** "No statistically detectable association of
+meaningful magnitude."
+
+#### 5.1.1 Why the Effect-Size Requirement and Granger Demotion
+
+Protocol v0.1 specified only p-value thresholds for Layer 1. The
+Source 02 evaluation (10Y-2Y Treasury spread, 2026-05-13) exposed
+the gap: with n = 4,081, Pearson r = -0.04 produced p = 0.008, easily
+crossing p < 0.05. Yet r² ≈ 0.0017 means the spread explained roughly
+0.17% of the variance in next-day volatility — practically negligible.
+The source then failed Layer 2 catastrophically (OOS R² of -0.42 vs.
+naive baseline), confirming the in-sample "signal" was an artifact of
+sample size rather than a real relationship.
+
+v0.2 closes this gap in two coordinated ways. First, Pearson and
+Spearman now require a minimum effect size of 0.10 in addition to
+statistical significance. The 0.10 threshold matches Cohen's
+small-effect convention and sits well outside the confidence interval
+width at our typical sample sizes (CI half-width ≈ 0.031 at n = 4,000),
+so a measured value of 0.10 is comfortably distinguishable from noise.
+Second, Granger causality is demoted from a gating to a supporting
+indicator: its F-statistics suffer from the same large-n significance
+inflation, and they are additionally sensitive to lag choice and
+stationarity assumptions that the protocol does not currently require
+sources to validate. An incremental-R² threshold for Granger may be
+revisited in a future protocol version once a concrete case motivates
+specific design choices.
+
+The general principle behind both changes: p-value alone is not a
+sufficient gate. Layer 1 in v0.2 requires substantive evidence that
+a relationship is both real and meaningful before a source advances
+to out-of-sample testing.
 
 ### Layer 2: Out-of-Sample Predictive Value
 
@@ -209,6 +255,13 @@ For honesty:
 - The methodology has known limitations (notably: inability to
   evaluate sources that affect markets through behavioral feedback
   loops, where measurement itself changes the system)
+- Layer 1 is a linear and monotonic filter (Pearson and Spearman
+  only). Sources hypothesized to be predictive through non-linear
+  mechanisms — threshold effects, U-shapes, regime-conditional
+  relationships — are not adequately evaluated by Layer 1 v0.2.
+  Adding non-linear association tests (mutual information, distance
+  correlation) is deferred until a concrete source motivates the
+  specific design choices involved.
 
 ---
 
@@ -219,4 +272,11 @@ number is incremented and a brief changelog entry is added below.
 
 ### Changelog
 
+- **0.2 (2026-05-17):** Layer 1 amendment. Added effect-size
+  threshold (max(|r|, |ρ|) ≥ 0.10) alongside the existing p-value
+  requirement. Demoted Granger causality from gating to supporting
+  indicator. Required dual reporting of Pearson and Spearman with
+  discrepancy flagging. Added §5.1.1 documenting the rationale.
+  Added explicit acknowledgement of linear/monotonic limitation in §9.
+  Motivated by Source 02 (yield curve) evaluation.
 - **0.1 (initial):** First version, defining baseline framework.
