@@ -73,6 +73,12 @@ random.
 independent of sample size; distinct from statistical significance, which
 measures only whether the effect is distinguishable from zero.
 
+**Cohen's small-effect convention** — A widely cited rule of thumb in
+applied statistics (Cohen, 1988) defining |r| = 0.10 as the smallest
+correlation effect size worth taking seriously, |r| = 0.30 as medium,
+and |r| = 0.50 as large. Adopted in protocol v0.2 as the Layer 1
+effect-size threshold.
+
 **Significance vs. effect size** — A relationship can be statistically
 significant (p < 0.05) but have a tiny effect size; with large samples,
 even microscopic effects become "significant" while remaining practically
@@ -111,6 +117,12 @@ that forms the basic unit of any predictive analysis.
 **Layer (in this protocol)** — One of the four hierarchical evaluation
 stages (association → out-of-sample → economic → robustness) through
 which each source is tested.
+
+**Gating vs. supporting indicator** — In protocol v0.2, a "gating"
+test is one whose result determines pass/fail for a layer; a
+"supporting" test is reported for context and interpretation but
+does not by itself decide advancement. Granger causality was demoted
+from gating to supporting in v0.2.
 
 **Graduated rigor** — The strategy of starting with only basic layers
 on early sources and adding more layers as the methodology matures.
