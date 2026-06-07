@@ -79,9 +79,11 @@ results.
 model selection and hyperparameter tuning. For parameter-free models
 (e.g. the univariate linear regressions used in early source
 evaluations), there is nothing to tune, so the validation period is
-folded into the training set rather than held out separately. When a
-source evaluation does this, it must state so explicitly in its
-verdict. The test period is held out regardless.
+held out but left unused — it is excluded from both the training set
+and the test set. When a source evaluation does this, it must state
+so explicitly in its verdict, so the gap between training-end and
+test-start is not mistaken for an error. The test period is held out
+regardless.
 
 For walk-forward validation, the training window is rolled forward
 in monthly steps starting from 2023-01-01.
