@@ -75,6 +75,14 @@ The test period is **never used** for model selection or threshold
 tuning. It is only touched once, when reporting final out-of-sample
 results.
 
+**Use of the validation period.** The validation period exists for
+model selection and hyperparameter tuning. For parameter-free models
+(e.g. the univariate linear regressions used in early source
+evaluations), there is nothing to tune, so the validation period is
+folded into the training set rather than held out separately. When a
+source evaluation does this, it must state so explicitly in its
+verdict. The test period is held out regardless.
+
 For walk-forward validation, the training window is rolled forward
 in monthly steps starting from 2023-01-01.
 
