@@ -32,6 +32,12 @@ pipeline rather than a discovery candidate.
   alignment dropped the final row)
 - **Training period:** 2010-01-04 to 2022-12-30 — 3,272 rows
 - **Test period (out-of-sample):** 2024-01-02 to 2026-05-07 — 589 rows
+- **Validation period (2023):** held out but left unused. This
+  univariate linear model has no hyperparameters to tune, so the 2023
+  validation year (≈250 trading days) is excluded from both training
+  and test per protocol §4. This accounts for the gap between the
+  training-end and test-start dates: 3,272 + 589 = 3,861, with the
+  remaining ≈250 rows being the unused 2023 period.
 
 ## 4. Layer-by-Layer Results
 
