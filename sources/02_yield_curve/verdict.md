@@ -37,6 +37,12 @@ on a one-day-ahead horizon.
   alignment): 4,081
 - **Training period:** 2010-01-04 to 2022-12-30 — 3,247 rows
 - **Test period (out-of-sample):** 2024-01-02 to 2026-05-07 — 585 rows
+- **Validation period (2023):** held out but left unused. This
+  univariate linear model has no hyperparameters to tune, so the 2023
+  validation year (≈249 trading days) is excluded from both training
+  and test per protocol §4. This accounts for the gap between the
+  training-end and test-start dates: 3,247 + 585 = 3,832, with the
+  remaining ≈249 rows being the unused 2023 period.
 
 Note: most of the training period featured a normal (positively sloped)
 curve, while the test period sat predominantly within the deep
